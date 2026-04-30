@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Devansh ❤️</title>
+    <!-- Confetti Library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: whitesmoke;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            overflow: hidden;
+            transition: background-color 0.8s ease;
+        }
+
+        .container {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            width: 85%;
+            max-width: 400px;
+            z-index: 1;
+            transition: all 0.5s ease;
+        }
+
+        /* Success Background Lighting Up */
+        .success-glow {
+            animation: bgLightUp 2s infinite alternate;
+        }
+
+        @keyframes bgLightUp {
+            from { box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+            to { box-shadow: 0 0 50px rgba(255, 0, 0, 0.4), 0 0 20px rgba(255, 0, 0, 0.2); }
+        }
+
+        .media-style {
+            width: 160px;
+            height: 160px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 5px solid red;
+            margin-bottom: 20px;
+            background-color: #f8f9fa;
+        }
+
+        /* GIF style for flowers */
+        .flower-gif {
+            width: 200px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: red;
+            font-size: 1.6rem;
+            margin: 0 0 1rem 0;
+            line-height: 1.4;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 1rem;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            font-weight: bold;
+        }
+
+        #yesBtn {
+            background-color: red;
+            color: white;
+            position: relative;
+            z-index: 100;
+        }
+
+        /* YES BUTTON GLOW */
+        @keyframes glowing {
+            0% { box-shadow: 0 0 5px red; }
+            50% { box-shadow: 0 0 25px red, 0 0 40px #ff4d4d; }
+            100% { box-shadow: 0 0 5px red; }
+        }
+
+        .pulse-glow {
+            animation: glowing 1.2s infinite;
+            border: 2px solid white !important;
+        }
+
+        #noBtn {
+            background-color: #6c757d;
+            color: white;
+        }
+
+        #celebration, #flower-page {
+            display: none;
+        }
+
+        .sub-text {
+            color: #555;
+            font-size: 0.9rem;
+            margin-top: 10px;
+            opacity: 0.6;
+        }
+
+        .wait-text {
+            font-size: 1.2rem;
+            color: red;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="bgMusic" loop>
+        <source src="music.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Page 1: The Ask -->
+    <div class="container" id="main-content">
+        <div class="img-container">
+            <img src="us.jpeg" alt="A photo of us" class="media-style">
+        </div>
+        <h1 id="questionText">Devansh, will you be my boyfriend?</h1>
+        <div class="buttons">
+            <button id="yesBtn" onclick="celebrate()">Yes</button>
+            <button id="noBtn" onclick="makeYesBigger()">No</button>
+        </div>
+        <p class="sub-text">Turn your sound on! 🔊</p>
+    </div>
+
+    <!-- Page 2: The Celebration -->
+    <div id="celebration" class="container">
+        <div class="img-container">
+            <video id="successVideo" class="media-style" autoplay muted loop playsinline>
+                <source src="celebration.mp4" type="video/mp4">
+            </video>
+        </div>
+        <h1>Best Decision Ever! 🥰 ❤️</h1>
+        <div class="wait-text">Can't wait to see you!</div>
+    </div>
+
+    <!-- Page 3: The Flowers -->
+    <div id="flower-page" class="container">
+        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHJueGZueXFpZ3B3eXNqZzRyeHh4eHh4eHh4eHh4eHh4eHh4eHh4JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/m8f06H0iH89R6/giphy.gif" alt="Flowers" class="flower-gif">
+        <h1>Wait wait...</h1>
+        <p class="wait-text">Here are some flowers for you! 💐</p>
+    </div>
+
+    <script>
+        let yesSize = 1;
+        const messages = ["Are you sure?", "Think again! 🥺", "But Devansh...", "Really sure??", "I'm gonna cry... 😭", "Click the red one! ❤️"];
+        let messageIndex = 0;
+
+        function playMusic() {
+            const audio = document.getElementById('bgMusic');
+            audio.play().catch(() => {});
+        }
+
+        function makeYesBigger() {
+            playMusic(); 
+            const yesBtn = document.getElementById('yesBtn');
+            const noBtn = document.getElementById('noBtn');
+            yesBtn.classList.add('pulse-glow');
+            yesSize += 0.5;
+            yesBtn.style.transform = `scale(${yesSize})`;
+            
+            if (messageIndex < messages.length) {
+                noBtn.innerText = messages[messageIndex];
+                messageIndex++;
+            } else {
+                noBtn.innerText = "Just say Yes! ❤️";
+            }
+        }
+
+        function celebrate() {
+            playMusic();
+            document.getElementById('main-content').style.display = 'none';
+            
+            const celebrationContainer = document.getElementById('celebration');
+            celebrationContainer.style.display = 'block';
+            celebrationContainer.classList.add('success-glow');
+            document.body.style.backgroundColor = "#fff5f5"; 
+            
+            const video = document.getElementById('successVideo');
+            video.addEventListener('click', function() {
+                video.muted = !video.muted;
+                if (!video.muted) video.play();
+            });
+
+            // Start Confetti
+            startConfetti();
+
+            // NEW: Transition to Flower Page after 5 seconds
+            setTimeout(() => {
+                celebrationContainer.style.opacity = '0';
+                setTimeout(() => {
+                    celebrationContainer.style.display = 'none';
+                    const flowerPage = document.getElementById('flower-page');
+                    flowerPage.style.display = 'block';
+                    flowerPage.classList.add('success-glow');
+                }, 500);
+            }, 5000);
+
+            if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
+        }
+
+        function startConfetti() {
+            var duration = 5 * 1000;
+            var animationEnd = Date.now() + duration;
+            var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0, colors: ['#ff0000', '#ffffff'] };
+
+            function randomInRange(min, max) { return Math.random() * (max - min) + min; }
+
+            var interval = setInterval(function() {
+                var timeLeft = animationEnd - Date.now();
+                if (timeLeft <= 0) return clearInterval(interval);
+                var particleCount = 50 * (timeLeft / duration);
+                confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
+                confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
+            }, 250);
+        }
+    </script>
+</body>
+</html>
